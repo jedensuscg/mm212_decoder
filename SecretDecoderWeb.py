@@ -12,7 +12,10 @@ with tab1:
         message = st.text_input("message to encode")
         encoded_array = Encode(message)
         st.write("Encoded message: ")
-        st.write(*encoded_array)
+        encoded_message = ""
+        for i in encoded_array:
+            encoded_message += f'{i} '
+        st.write(encoded_message)
         if(GetUnknownLetterError()):
            st.write("NOTE: Some characters could not be encoded due to input error. They have been replaced with a '0'")
 
@@ -38,7 +41,7 @@ with tab2:
         message = st.text_input("Message to Decode")
         decoded_message = Decode(message)
         st.write("Decoded message: ")
-        st.write(*decoded_message)
+        st.write(decoded_message)
         if(GetUnknownNumberError()):
             st.write("NOTE: Some characters could not be decoded. They have been replaced with a '?'")
     with st.expander("PARTIAL DECODE", False):
@@ -47,7 +50,7 @@ with tab2:
         message = st.text_input("Numbers to convert to text.")
         converted_message = PartialDecode(message)
         st.write("Decoded message: ")
-        st.write(*converted_message)
+        st.write(converted_message)
 
 with tab3:
     st.write("Lookup Table: ")
