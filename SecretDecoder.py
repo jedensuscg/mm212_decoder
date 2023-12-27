@@ -1,62 +1,5 @@
 #f(x) = 5x - 1
-letter_dict = {}
-encoded_array = {}
-
-#Create index of letters
-for i in range(26):
-    letter_dict[chr(ord('A') + i)] = i + 1
-letter_dict[' '] = 27
-
-def Encode(message):
-    encoded_array = []
-    for i in message:
-        #Convert letter to Number
-        number = LetterToNumberLookup(i)
-
-        #encode the number
-        encoded_number = 5*number - 1
-
-        #add to encrypted message
-        encoded_array.append(encoded_number)
-    return encoded_array
-
-def PartialEncode(message):
-    converted_array = []
-    for i in message:
-        #Convert letter to Number
-        number = LetterToNumberLookup(i)
-        #add to encrypted message
-        converted_array.append(number)
-    return converted_array
-
-def Decode():
-    print("Enter each number of the encoded message, seperated by a space: i.e 45 10 1")
-    encoded_message = input()
-    encoded_array = encoded_message.split()
-    decoded_message = ""
-    for i in encoded_array:
-        number = int(i)
-        decoded_number = (number + 1)/5
-        decoded_message += NumberToLetterLookup(decoded_number)
-    return decoded_message
-
-def PartialDecode():
-    encoded_message = input()
-    encoded_array = encoded_message.split()
-    converted_message = ""
-    for i in encoded_array:
-        number = int(i)
-        converted_message += NumberToLetterLookup(number)
-    return converted_message
-
-def NumberToLetterLookup(number):
-    for key, value in letter_dict.items():
-        if value == number:
-            return key
-        
-def LetterToNumberLookup(letter):
-    return letter_dict[letter.upper()]
-    
+from Functions import Encode, PartialEncode, Decode, PartialDecode, CreateLookupTable, GetUnknownNumberError, GetUnknownLetterError
 
 
 while True:
@@ -80,28 +23,43 @@ while True:
         encoded_array = Encode(message)
         print("Encoded message: ")
         print(*encoded_array, sep=' ')
+        if(GetUnknownLetterError()):
+            print("NOTE: Some characters could not be encoded due to invalid input. They have been replaced with a '0'")
+        print("Press Enter To Continue")
+        input()
         print("----------------------------------------------\n")
     elif choice == "2":
-        decoded_message = Decode()
+        print("Enter each number of the encoded message, seperated by a space: i.e 45 10 1")
+        message = input()
+        decoded_message = Decode(message)
         print("Decoded message: ")
         print(decoded_message)
+        if(GetUnknownNumberError()):
+            print("NOTE: Some characters could not be decoded. They have been replaced with a '?'")
+        print("Press Enter To Continue")
+        input()
         print("----------------------------------------------\n")
     elif choice == "3":
-        print("Enter your message to be converte to numbers using the simple lookup table. This does NOT encode the message with a function.")
+        print("Enter your message to be converted to numbers using the simple lookup table. This does NOT encode the message with a function.")
         message = input()
         converted_array = PartialEncode(message)
         print("Message to lookup numbers: ")
         print(*converted_array, sep=' ')
+        print("Press Enter To Continue")
+        input()
         print("----------------------------------------------\n")
     elif choice == "4":
-        converted_message = PartialDecode()
-        print("Decoded message: ")
+        print("Enter each number of the message, separated by a space (1-27)");
+        converted_message = PartialDecode(message)
+        print("Converted message: ")
         print(converted_message)
+        print("Press Enter To Continue")
+        input()
         print("----------------------------------------------\n")
     elif choice == "5": 
         print("Lookup Table: ")
         print("-------------")
-        for key, value in letter_dict.items():
+        for key, value in CreateLookupTable().items():
             print(key, " : ", value)
         print("-------------")
         print("----------------------------------------------\n")
