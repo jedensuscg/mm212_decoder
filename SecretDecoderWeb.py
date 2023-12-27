@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from Functions import Encode, PartialEncode, Decode, PartialDecode, CreateLookupTable, GetKeysFromValue, GetUnknownNumberError, GetUnknownLetterError
 st.set_page_config(layout="wide")
+st.header("SECRET DECODER TOOL - TOP SECRET - FOR MM212 USE ONLY")
 tab1, tab2, tab3 = st.tabs(["Encode", "Decode", "Lookup Table"])
 
 with tab1:
