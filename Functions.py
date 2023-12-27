@@ -51,7 +51,10 @@ def Decode(message):
     encoded_array = message.split()
     decoded_message = ""
     for i in encoded_array:
-        number = int(i)
+        try:
+            number = int(i)
+        except:
+            number = 0
         decoded_number = (number + 1)/5
         try:
             decoded_message += NumberToLetterLookup(decoded_number)
@@ -68,19 +71,21 @@ def PartialDecode(message):
     converted_message = ""
     for i in encoded_array:
         number = int(i)
-        converted_message += NumberToLetterLookup(number)
+        try:
+            converted_message += NumberToLetterLookup(number)
+        except:
+            converted_message += "?"
+            number_error = True
+        else:
+            number_error = False
     return converted_message
 
 def NumberToLetterLookup(number):
     letter_dict = CreateLookupTable()
-    if(number == type(int)):
-        return "?"
     try:
         for key, value in letter_dict.items():
             if value == number:
                 return key
-            else:
-                return "?"
     except:
         return "?"
         
