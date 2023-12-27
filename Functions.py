@@ -73,11 +73,25 @@ def PartialDecode(message):
 
 def NumberToLetterLookup(number):
     letter_dict = CreateLookupTable()
-    for key, value in letter_dict.items():
-        if value == number:
-            return key
+    if(number == type(int)):
+        return "?"
+    try:
+        for key, value in letter_dict.items():
+            if value == number:
+                return key
+            else:
+                return "?"
+    except:
+        return "?"
         
 def LetterToNumberLookup(letter):
     letter_dict = CreateLookupTable()
-    return letter_dict[letter.upper()]
+    if(letter == type(str)):
+        return 0
+    try:
+        number = letter_dict[letter.upper()]
+    except:
+        return 0
+    else:
+        return number
     

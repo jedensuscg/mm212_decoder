@@ -30,7 +30,10 @@ with tab1:
         letter_dict = CreateLookupTable()
         count = 0
         for i in converted_array:
-            df.insert(count,count,(i ,GetKeysFromValue(letter_dict, i)[0]),True)
+            try:
+                df.insert(count,count,(i ,GetKeysFromValue(letter_dict, i)[0]),True)
+            except:
+                df.insert(count,count,(i ,0),True)
             count += 1
         df.index=["LETTER","NUMBER"]
         st.dataframe(df,hide_index=True)
