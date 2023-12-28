@@ -1,3 +1,4 @@
+import sympy
 from sympy import *
 x = symbols('x')
 number_error = False
