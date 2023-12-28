@@ -1,6 +1,6 @@
-#f(x) = 5x - 1
-from Functions import Encode, PartialEncode, Decode, PartialDecode, CreateLookupTable, GetUnknownNumberError, GetUnknownLetterError
 
+from Functions import Encode, PartialEncode, Decode, PartialDecode, CreateLookupTable, GetUnknownNumberError, GetUnknownLetterError, SetEncodeExpression, GetEncodeExpression
+SetEncodeExpression()
 
 while True:
     print("         ** MM212 SECRET DECODER TOOL **")

@@ -1,9 +1,32 @@
+from sympy import *
+x = symbols('x')
 number_error = False
 letter_error = False
+encode_expression = sympify("5*x-1")
+decode_expression = sympify("(x+1)/5")
+
+def SetEncodeExpression(exp):
+    global encode_expression
+    encode_expression = sympify(exp)
+
+def GetEncodeExpression():
+    global encode_expression
+    return encode_expression
+
+def GetDecodeExpression():
+    global decode_expression
+    return decode_expression
+
+def SetDecodeExpression(exp):
+    global decode_expression
+    decode_expression = sympify(exp)
 
 def GetUnknownNumberError():
     global number_error
     return number_error
+
+def GetLatexExpression(exp):
+    return latex(exp)
 
 def GetUnknownLetterError():
     global letter_error
@@ -24,13 +47,16 @@ def CreateLookupTable():
 def Encode(message):
     global letter_error
     encoded_array = []
+    
     for i in message:
         try:
             #Convert letter to Number
             number = LetterToNumberLookup(i)
-            encoded_number = 5*number - 1
+            encoded_number = encode_expression.subs(x, number)
             encoded_array.append(encoded_number)
-        except:
+
+        except Exception as e:
+            print(e)
             letter_error = True
             encoded_array.append(0)
         else:
@@ -50,12 +76,13 @@ def Decode(message):
     global number_error
     encoded_array = message.split()
     decoded_message = ""
+
     for i in encoded_array:
         try:
             number = int(i)
         except:
             number = 0
-        decoded_number = (number + 1)/5
+        decoded_number = decode_expression.subs(x, number) 
         try:
             decoded_message += NumberToLetterLookup(decoded_number)
             number_error = False

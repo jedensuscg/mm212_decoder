@@ -1,10 +1,47 @@
 #f(x) = 5x - 1
 import streamlit as st
 import pandas as pd
-from Functions import Encode, PartialEncode, Decode, PartialDecode, CreateLookupTable, GetKeysFromValue, GetUnknownNumberError, GetUnknownLetterError
+from Functions import Encode, PartialEncode, Decode, PartialDecode, CreateLookupTable, GetKeysFromValue, GetUnknownNumberError, GetUnknownLetterError, SetEncodeExpression, GetEncodeExpression, GetDecodeExpression, GetLatexExpression, SetDecodeExpression
+
 st.set_page_config(layout="wide")
+
+
+
 st.header("SECRET DECODER TOOL - TOP SECRET - FOR MM212 USE ONLY")
 tab1, tab2, tab3 = st.tabs(["Encode", "Decode", "Lookup Table"])
+with st.sidebar:
+    st.write("This tool will take a message and convert it to numbers and vice versa. This was made as a fun project to coincide with my MM213 Algebra class.")
+    st.divider()
+    st.header("Functions")
+    st.write("You can change the Encode/Decode functions by entering new ones below.")
+    st.write(":red[THIS IS A VERY BASIC IMPLEMENTATION OF SYMPY. It is not very robust and will not work with all functions.]")
+    exp = st.text_input("Enter new ENCODE function: ")
+    error_box_encode = st.empty()
+    if st.button("Set Encode"):
+        try:
+            SetEncodeExpression(exp)
+        except:
+            error_box_encode.text("Invalid Expression")
+
+    exp = st.text_input("Enter new DECODE function: NOTE: If not the exact inverse of the encode function, it will not work.")
+    error_box_decode = st.empty()
+    if st.button("Set Decode"):
+        try:
+            SetDecodeExpression(exp)
+            print("decode")
+        except Exception as e:
+            error_box_decode.text("Invalid Expression")
+
+
+    hint_box = st.empty()
+    if st.button("Help"):
+        hint_box.text("use * for multiplication \nuse ** or ^ for exponents. \ni.e 5*x**2 + 3*x - 1.\nUse parenthesis for order of operations.\nOther latex functions can be used. (such as sqrt(x)))")
+
+    st.write("Current functions being used to encode is")
+    st.latex(f'Encode: f(x) = {GetLatexExpression(GetEncodeExpression())}')
+    st.latex(f'Decode: f(x) = {GetLatexExpression(GetDecodeExpression())}')
+
+    
 
 with tab1:
     with st.expander("FULL ENCODE", False):
