@@ -49,7 +49,12 @@ with st.sidebar:
     st.latex(f'Encode: f(x) = {GetLatexExpression(GetEncodeExpression())}')
     st.latex(f'Decode: f(x) = {GetLatexExpression(GetDecodeExpression())}')
 
-    
+    st.divider()
+    st.write("Made by James Edens")
+    git_url = "https://github.com/jedensuscg/mm212_decoder/tree/main"
+    homepage = "https://www.jamesedens.me/"
+    st.write("Github - [link](%s)" % git_url)
+    st.write("Homepage - [link](%s)" % homepage)
 
 with tab1:
     st.header("FULL ENCODE")
