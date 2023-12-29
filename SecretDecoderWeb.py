@@ -34,9 +34,17 @@ with st.sidebar:
 
 
     hint_box = st.empty()
-    if st.button("Help"):
-        hint_box.text("use * for multiplication \nuse ** or ^ for exponents. \ni.e 5*x**2 + 3*x - 1.\nUse parenthesis for order of operations.\nOther latex functions can be used. (such as sqrt(x)))")
-
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Help"):
+            hint_box.text("use * for multiplication \nuse ** or ^ for exponents. \ni.e 5*x**2 + 3*x - 1.\nUse parenthesis for order of operations.\nOther latex functions can be used. (such as sqrt(x)))")
+    with col2:
+        
+        if st.button("Default"):
+            SetEncodeExpression("5*x - 1")
+            SetDecodeExpression("(x+1)/5")
+            hint_box.text("Reset to default functions.")
+        st.write("Reset to default functions.")
     st.write("Current functions being used to encode is")
     st.latex(f'Encode: f(x) = {GetLatexExpression(GetEncodeExpression())}')
     st.latex(f'Decode: f(x) = {GetLatexExpression(GetDecodeExpression())}')
@@ -44,20 +52,20 @@ with st.sidebar:
     
 
 with tab1:
-    with st.expander("FULL ENCODE", False):
-        st.write("This tool will take a message and convert it to numbers using the special encoding function")
-        st.write("Enter your message to be encoded")
-        message = st.text_input("message to encode")
-        encoded_array = Encode(message)
-        st.write("Encoded message: ")
-        encoded_message = ""
-        for i in encoded_array:
-            encoded_message += f'{i} '
-        st.write(encoded_message)
-        if(GetUnknownLetterError()):
-           st.write("NOTE: Some characters could not be encoded due to input error. They have been replaced with a '0'")
-
-    with st.expander("PARTIAL ENCODE", False):
+    st.header("FULL ENCODE")
+    st.write("This tool will take a message and convert it to numbers using the special encoding function")
+    st.write("Enter your message to be encoded")
+    message = st.text_input("message to encode")
+    encoded_array = Encode(message)
+    st.write("Encoded message: ")
+    encoded_message = ""
+    for i in encoded_array:
+        encoded_message += f'{i} '
+    st.write(encoded_message)
+    if(GetUnknownLetterError()):
+        st.write("NOTE: Some characters could not be encoded due to input error. They have been replaced with a '0'")
+    st.divider()
+    with st.expander("PARTIAL ENCODE - Lookup Table Only", False):
         st.write("This tool will take a message and convert it to numbers using ONLY the lookup table. \n NOTE: It does NOT run through the encode function.")
         st.write("Enter your message to be converted.")
         message = st.text_input("Message to convert.")
@@ -76,16 +84,17 @@ with tab1:
         st.dataframe(df,hide_index=True)
 
 with tab2:
-    with st.expander("FULL DECODE", False):
-        st.write("This tool will take a message and convert it to numbers using the following function:")
-        st.write("Enter each number of your message to be decoded, separated by a space: i.e 45 10 1")
-        message = st.text_input("Message to Decode")
-        decoded_message = Decode(message)
-        st.write("Decoded message: ")
-        st.write(decoded_message)
-        if(GetUnknownNumberError()):
-            st.write("NOTE: Some characters could not be decoded. They have been replaced with a '?'")
-    with st.expander("PARTIAL DECODE", False):
+    st.header("FULL DECODE:")
+    st.write("This tool will take a message and convert it to numbers using the following function:")
+    st.write("Enter each number of your message to be decoded, separated by a space: i.e 45 10 1")
+    message = st.text_input("Message to Decode")
+    decoded_message = Decode(message)
+    st.write("Decoded message: ")
+    st.write(decoded_message)
+    if(GetUnknownNumberError()):
+        st.write("NOTE: Some characters could not be decoded. They have been replaced with a '?'")
+    st.divider()
+    with st.expander("PARTIAL DECODE - Not for encoded messages", False):
         st.write("This tool will take a message and convert it to numbers using ONLY the lookup table. It does not run through the decode function.")
         st.write("Enter your each number to be converted, separated by a space (1-27)")
         message = st.text_input("Numbers to convert to text.")
